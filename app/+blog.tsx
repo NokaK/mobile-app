@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
+
 import { View } from "@/components/Themed";
-import HomeScreen from "@/app/HomeScreen";
-const home = () => {
+import BlogScreen from "./BlogScreen";
+const blog = () => {
   return (
     <>
       <View style={styles.container}>
-        <HomeScreen />
+        <BlogScreen />
       </View>
     </>
   );
@@ -31,4 +32,4 @@ const styles = StyleSheet.create({
     color: "#2e78b7",
   },
 });
-export default home;
+export default blog;
