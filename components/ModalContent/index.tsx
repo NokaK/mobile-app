@@ -8,35 +8,48 @@ import {
 } from "react-native";
 import { BlogModel } from "@/types/shared";
 import { CATEGORY_DATA } from "@/data/blogs";
-import RNPickerSelect from "react-native-picker-select";
-import { useBlogContext } from "../../stores/BlogContext";
+import Select from "../Select";
+import { RootState } from "../../reducers/rootReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { addBlog, updateBlog } from "../../actions/blogActions";
 interface ModalProps {
   onClose: () => void;
-  blog?: BlogModel;
+  blog?: BlogModel | null;
 }
 const ModalContent = ({ onClose, blog }: ModalProps) => {
-  const { blogs, addBlog, updateBlog } = useBlogContext();
+  const dispatch = useDispatch();
+  const blogs = useSelector((state: RootState) => state.blogs);
   const [blogInfo, setBlogInfo] = useState<BlogModel>({
-    id: blog?.id || blogs.length + 2,
+    id: blog?.id || blogs.length + 1,
     title: blog?.title || "",
     content: blog?.content || "",
     author: blog?.author || "",
     date: blog?.date || "",
     category: {
-      id: blog?.category.id || CATEGORY_DATA[1].id,
-      title: blog?.category.title || CATEGORY_DATA[1].title,
+      id: blog?.category.id || CATEGORY_DATA[0].id,
+      title: blog?.category.title || CATEGORY_DATA[0].title,
     },
   });
 
   const handleBlogSubmit = () => {
     if (blog) {
-      updateBlog(blog.id, blogInfo);
+      dispatch(updateBlog(blog.id, blogInfo));
       onClose();
       return;
     }
+    dispatch(addBlog(blogInfo));
 
-    addBlog(blogInfo);
     onClose();
+  };
+  const handleSelectEdit = (value: number) => {
+    setBlogInfo({
+      ...blogInfo,
+      category: {
+        id: value,
+        title: CATEGORY_DATA.find((category) => category.id === value)
+          ?.title as string,
+      },
+    });
   };
   return (
     <View style={styles.modalContainer}>
@@ -69,21 +82,8 @@ const ModalContent = ({ onClose, blog }: ModalProps) => {
         onChangeText={(text) => setBlogInfo({ ...blogInfo, date: text })}
       />
       <View style={styles.select}>
-        <RNPickerSelect
-          placeholder={{
-            label: "Select a category...",
-            value: null,
-          }}
-          onValueChange={(value) =>
-            setBlogInfo({
-              ...blogInfo,
-              category: {
-                id: value,
-                title: CATEGORY_DATA.find((category) => category.id === value)
-                  ?.title as string,
-              },
-            })
-          }
+        <Select
+          onEdit={handleSelectEdit}
           items={CATEGORY_DATA.map((category) => ({
             label: category.title,
             value: category.id,
@@ -94,7 +94,6 @@ const ModalContent = ({ onClose, blog }: ModalProps) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.addButton} onPress={handleBlogSubmit}>
           <Text style={styles.buttonText}>
-            {" "}
             {blog ? "Update Blog" : "Add  Blog"}
           </Text>
         </TouchableOpacity>

@@ -1,14 +1,16 @@
 import React from "react";
 import { TouchableOpacity, Dimensions, Text, StyleSheet } from "react-native";
 import { BlogModel } from "@/types/shared";
-import { useNavigation } from "@react-navigation/native";
-
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 interface BlogContentProps {
   blog: BlogModel;
 }
 
 const BlogContent = ({ blog }: BlogContentProps) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation() as NavigationProp<{
+    "+blog": { blogId: number };
+  }>;
+
   const handleBlogClick = () => {
     navigation?.navigate("+blog", { blogId: blog.id });
   };

@@ -6,17 +6,21 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList, BlogModel } from "@/types/shared";
 import { RouteProp } from "@react-navigation/native";
 import React from "react";
-import { useBlogContext } from "@/stores/BlogContext";
 import { useState } from "react";
 import ModalContent from "@/components/ModalContent";
 import { Modal } from "react-native";
+import { deleteBlog } from "../../actions/blogActions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../reducers/rootReducer";
 type BlogDetailRouteProp = RouteProp<RootStackParamList, "BlogScreen">;
 
 const BlogScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const route = useRoute<BlogDetailRouteProp>();
   const blogId = route?.params?.blogId;
-  const { blogs, deleteBlog } = useBlogContext();
+  const blogs = useSelector((state: RootState) => state.blogs);
+  // const { blogs, deleteBlog } = useBlogContext();
   const blog = blogs.find((blog: BlogModel) => blog.id === blogId);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [blogInfo, setBlogInfo] = useState<BlogModel | undefined>(blog);
@@ -25,8 +29,8 @@ const BlogScreen = () => {
   };
   const handleDeleteBlog = () => {
     if (!blog) return;
-    deleteBlog(blog.id);
-
+    // deleteBlog(blog.id);
+    dispatch(deleteBlog(blog.id));
     handleGoBack();
   };
   const handleEditBlog = () => {

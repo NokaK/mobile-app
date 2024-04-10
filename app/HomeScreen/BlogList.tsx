@@ -3,11 +3,12 @@ import { Text, View, StyleSheet } from "react-native";
 import { BlogModel } from "@/types/shared";
 import { useCategoryContext } from "../../stores/CategoryContext";
 import BlogContent from "./BlogContent";
-import { useBlogContext } from "../../stores/BlogContext";
+import { RootState } from "../../reducers/rootReducer";
+import { useSelector } from "react-redux";
 
 const BlogList = () => {
   const { selectedCategory } = useCategoryContext();
-  const { blogs } = useBlogContext();
+  const blogs = useSelector((state: RootState) => state.blogs);
   const filteredBlogs = selectedCategory
     ? blogs.filter((blog: BlogModel) => blog.category.id === selectedCategory)
     : blogs;

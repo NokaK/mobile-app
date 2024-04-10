@@ -4,36 +4,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CategoryList from "./CategoryList";
 import BlogList from "./BlogList";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import ModalContent from "@/components/ModalContent";
 import { Modal } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
-import { useBlogContext } from "@/stores/BlogContext";
 import { BlogModel } from "@/types/shared";
-import { useRef, useEffect } from "react";
+import Select from "@/components/Select";
+import { RootState } from "../../reducers/rootReducer";
+import { useSelector } from "react-redux";
 
 const HomeScreen = () => {
-  const { blogs } = useBlogContext();
-  const pickerRef = useRef<RNPickerSelect>(null);
+  const blogs = useSelector((state: RootState) => state.blogs);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
-  const [blogInfo, setBlogInfo] = useState<BlogModel>(blogs[0]);
+  const [selectedBlog, setSelectedBlog] = useState<BlogModel | null>(null);
+
   const handleBlogEdit = (id: number) => {
-    const blog = blogs.find((blog) => blog.id === id);
+    const blog = blogs.find((blog) => blog.id === Number(id));
+
     if (blog) {
-      setBlogInfo(blog);
+      setSelectedBlog(blog);
     }
   };
-  useEffect(() => {
-    if (pickerVisible && pickerRef.current) {
-      pickerRef.current.togglePicker();
-    }
-  }, [pickerVisible]);
+
   return (
     <>
       <SafeAreaView edges={["top"]} />
-      <View style={styles.container}>
+
+      <ScrollView
+        scrollEventThrottle={16}
+        keyboardShouldPersistTaps="handled"
+        style={styles.container}
+      >
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Welcome back</Text>
           <View style={styles.iconContainer}>
@@ -47,17 +49,16 @@ const HomeScreen = () => {
         </View>
         <CategoryList />
         <BlogList />
-      </View>
+      </ScrollView>
+
       <Modal visible={isModalVisible} animationType="slide">
         <ModalContent
           onClose={() => setIsModalVisible(false)}
-          blog={blogInfo}
+          blog={selectedBlog}
         />
       </Modal>
       {pickerVisible && (
-        <RNPickerSelect
-          ref={pickerRef}
-          onValueChange={(value) => handleBlogEdit(value)}
+        <Select
           items={blogs.map((blog) => ({
             label: blog.title,
             value: blog.id,
@@ -66,6 +67,8 @@ const HomeScreen = () => {
             setPickerVisible(false);
             setIsModalVisible(true);
           }}
+          onEdit={handleBlogEdit}
+          isPickerVisible={pickerVisible}
         />
       )}
     </>
