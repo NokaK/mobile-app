@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { BlogModel } from "@/types/shared";
-import { useCategoryContext } from "../../stores/CategoryContext";
+import { useCategoryContext } from "@/stores/CategoryContext";
 import BlogContent from "./BlogContent";
-import { RootState } from "../../reducers/rootReducer";
+import { RootState } from "@/reducers/rootReducer";
 import { useSelector } from "react-redux";
 
 const BlogList = () => {

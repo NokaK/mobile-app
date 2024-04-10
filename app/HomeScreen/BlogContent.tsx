@@ -18,8 +18,9 @@ const BlogContent = ({ blog }: BlogContentProps) => {
   return (
     <TouchableOpacity style={[styles.blogItem]} onPress={handleBlogClick}>
       <Text style={styles.blogTitle}>{blog.title}</Text>
-      <Text style={styles.blogContent}>{blog.content}</Text>
-
+      <Text style={styles.blogContent} numberOfLines={4} ellipsizeMode="tail">
+        {blog.content}
+      </Text>
       <Text style={styles.readMore}>Read More</Text>
     </TouchableOpacity>
   );

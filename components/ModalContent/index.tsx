@@ -9,9 +9,9 @@ import {
 import { BlogModel } from "@/types/shared";
 import { CATEGORY_DATA } from "@/data/blogs";
 import Select from "../Select";
-import { RootState } from "../../reducers/rootReducer";
+import { RootState } from "@/reducers/rootReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { addBlog, updateBlog } from "../../actions/blogActions";
+import { addBlog, updateBlog } from "@/actions/blogActions";
 interface ModalProps {
   onClose: () => void;
   blog?: BlogModel | null;

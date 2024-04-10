@@ -1,4 +1,4 @@
-import { CategoryModel, BlogModel } from "../types/shared";
+import { CategoryModel, BlogModel } from "@/types/shared";
 export const BLOGS: BlogModel[] = [
   {
     id: 11,

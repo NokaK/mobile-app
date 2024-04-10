@@ -1,9 +1,9 @@
 import React from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { CATEGORY_DATA } from "../../data/blogs";
+import { CATEGORY_DATA } from "@/data/blogs";
 import { CategoryModel } from "@/types/shared";
 import CategoryCard from "./CategoryCard";
-import { useCategoryContext } from "../../stores/CategoryContext";
+import { useCategoryContext } from "@/stores/CategoryContext";
 
 const CategoryList = () => {
   const { selectedCategory, setSelectedCategory } = useCategoryContext();

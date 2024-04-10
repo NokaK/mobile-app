@@ -9,10 +9,9 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
-import CategoryProvider from "../stores/CategoryContext";
+import CategoryProvider from "@/stores/CategoryContext";
 import { Provider } from "react-redux";
-
-import store from "../stores/blogStore";
+import store from "@/stores/blogStore";
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
@@ -48,7 +47,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <Provider store={store as any}>
+    <Provider store={store}>
       <CategoryProvider>
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}

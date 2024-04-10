@@ -9,9 +9,9 @@ import React from "react";
 import { useState } from "react";
 import ModalContent from "@/components/ModalContent";
 import { Modal } from "react-native";
-import { deleteBlog } from "../../actions/blogActions";
+import { deleteBlog } from "@/actions/blogActions";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../reducers/rootReducer";
+import { RootState } from "@/reducers/rootReducer";
 type BlogDetailRouteProp = RouteProp<RootStackParamList, "BlogScreen">;
 
 const BlogScreen = () => {

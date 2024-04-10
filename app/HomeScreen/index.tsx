@@ -10,7 +10,7 @@ import ModalContent from "@/components/ModalContent";
 import { Modal } from "react-native";
 import { BlogModel } from "@/types/shared";
 import Select from "@/components/Select";
-import { RootState } from "../../reducers/rootReducer";
+import { RootState } from "@/reducers/rootReducer";
 import { useSelector } from "react-redux";
 
 const HomeScreen = () => {

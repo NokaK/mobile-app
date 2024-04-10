@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-
 import { View } from "@/components/Themed";
 import BlogScreen from "./BlogScreen";
+
 const blog = () => {
   return (
     <>
