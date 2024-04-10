@@ -12,6 +12,7 @@ import Select from "../Select";
 import { RootState } from "@/reducers/rootReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { addBlog, updateBlog } from "@/actions/blogActions";
+import Button from "../Button";
 interface ModalProps {
   onClose: () => void;
   blog?: BlogModel | null;
@@ -92,14 +93,13 @@ const ModalContent = ({ onClose, blog }: ModalProps) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.addButton} onPress={handleBlogSubmit}>
-          <Text style={styles.buttonText}>
-            {blog ? "Update Blog" : "Add  Blog"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Text style={styles.buttonText}>Close</Text>
-        </TouchableOpacity>
+        <Button
+          text={blog ? "Update Blog" : "Add  Blog"}
+          onPress={handleBlogSubmit}
+          type="primary"
+        />
+
+        <Button text="Close" onPress={onClose} type="danger" />
       </View>
     </View>
   );
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: "80%",
+    width: "90%",
     height: 40,
     borderWidth: 1,
     borderColor: "gray",
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   select: {
-    width: "80%",
+    width: "90%",
     height: 40,
     borderWidth: 1,
     borderColor: "gray",
@@ -141,25 +141,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    width: "80%",
+    width: "90%",
     marginTop: 20,
-    gap: 10,
-  },
-  addButton: {
-    width: "100%",
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-  },
-  closeButton: {
-    backgroundColor: "red",
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
   },
 });
 

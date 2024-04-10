@@ -12,6 +12,7 @@ import { Modal } from "react-native";
 import { deleteBlog } from "@/actions/blogActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/reducers/rootReducer";
+import Button from "@/components/Button";
 type BlogDetailRouteProp = RouteProp<RootStackParamList, "BlogScreen">;
 
 const BlogScreen = () => {
@@ -20,7 +21,6 @@ const BlogScreen = () => {
   const route = useRoute<BlogDetailRouteProp>();
   const blogId = route?.params?.blogId;
   const blogs = useSelector((state: RootState) => state.blogs);
-  // const { blogs, deleteBlog } = useBlogContext();
   const blog = blogs.find((blog: BlogModel) => blog.id === blogId);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [blogInfo, setBlogInfo] = useState<BlogModel | undefined>(blog);
@@ -29,7 +29,6 @@ const BlogScreen = () => {
   };
   const handleDeleteBlog = () => {
     if (!blog) return;
-    // deleteBlog(blog.id);
     dispatch(deleteBlog(blog.id));
     handleGoBack();
   };
@@ -59,15 +58,9 @@ const BlogScreen = () => {
             <Text style={styles.blogInfoText}>Date:{blog?.date}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.editButton} onPress={handleEditBlog}>
-          <Text style={styles.buttonText}>Edit Blog</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={handleDeleteBlog}
-        >
-          <Text style={styles.buttonText}>Delete Blog</Text>
-        </TouchableOpacity>
+        <Button type="primary" onPress={handleEditBlog} text="Edit Blog" />
+
+        <Button type="danger" onPress={handleDeleteBlog} text="Delete Blog" />
       </View>
       <Modal visible={isModalVisible} animationType="slide">
         <ModalContent
@@ -103,24 +96,6 @@ const styles = StyleSheet.create({
   blogInfoText: {
     fontStyle: "italic",
     marginBottom: 5,
-    fontWeight: "bold",
-  },
-  editButton: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  deleteButton: {
-    backgroundColor: "red",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
     fontWeight: "bold",
   },
 });
