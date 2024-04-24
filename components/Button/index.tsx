@@ -25,6 +25,7 @@ const Button = ({ text, onPress, type }: ButtonProps) => {
 const styles = StyleSheet.create({
   buttonWrapper: {
     padding: 10,
+
     borderRadius: 5,
     marginTop: 10,
     alignItems: "center",
