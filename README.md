@@ -1,2 +1,2 @@
-# ardi
+
 - npx expo start
