@@ -1,50 +1,29 @@
-name: Expo CI/CD
+name: EAS Build Android
 
 on:
   push:
-    branches: [development]
-  pull_request:
-    branches: [development]
+    branches: [ main ]
 
 jobs:
   build:
-    name: Expo Build
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - run: npm install -g eas-cli
-    - run: npm install
+      - run: npm install -g eas-cli
+      - run: npm ci
 
-    - run: eas whoami || echo $EXPO_TOKEN | eas login --token
-      env:
-        EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      - name: Login to Expo
+        run: eas whoami || echo $EXPO_TOKEN | eas login --token
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-    - run: eas build --platform android --non-interactive
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run tests
-      run: npm test
-
-    - name: Install Expo CLI
-      run: npm install -g expo-cli
-
-    - name: Login to Expo
-      run: echo $EXPO_TOKEN | eas login --token
-      env:
-       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-    - name: Publish to Expo
-      run: expo publish
-    - run: eas build --platform android --non-interactive
-
-
+      - name: Build Android App
+        run: eas build --platform android --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
