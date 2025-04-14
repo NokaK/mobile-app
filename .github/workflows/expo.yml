@@ -43,5 +43,6 @@ jobs:
 
     - name: Publish to Expo
       run: expo publish
+    - run: eas build --platform android --non-interactive
 
 
