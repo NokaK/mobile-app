@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
   },
   link: {
