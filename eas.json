@@ -2,7 +2,10 @@
     "build": {
       "production": {
         "releaseChannel": "production",
-        "distribution": "store"
+        "distribution": "store",
+        "env": {
+            "EXPO_TOKEN": "your_token"
+          }
       }
     }
   }
