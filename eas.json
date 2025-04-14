@@ -1,11 +1,8 @@
 {
     "build": {
       "production": {
-        "extra": {
-          "eas": {
-            "projectId": "823f411e-846c-47f9-8978-22e2f4d4a339"
-          }
-        }
+        "releaseChannel": "production",
+        "distribution": "store"
       }
     }
   }
