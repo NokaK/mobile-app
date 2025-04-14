@@ -26,10 +26,11 @@
       }
     },
     "android": {
+        "package": "com.noka.ardi",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-         "package": "com.noka.ardi"
+       
       }
     },
     "web": {
